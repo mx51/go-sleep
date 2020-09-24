@@ -3,5 +3,6 @@
 ### Usage
 
 ```
-PRESTOP_SLEEP=3 ./sleep
+go get github.com/awilmore/go-sleep
+SLEEP_SECONDS=3 go-sleep
 ```

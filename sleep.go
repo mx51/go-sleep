@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	sleepEnvVarName = "PRESTOP_SLEEP"
+	sleepEnvVarName = "SLEEP_SECONDS"
 )
 
 var (
@@ -18,7 +18,7 @@ var (
 
 func main() {
 	// Log useful start message
-	log.Println("PRESTOP SLEEP: STARTING")
+	log.Println("SLEEP: STARTING")
 
 	// Determine sleep time duration
 	sleepSeconds := checkSleepEnvVar()
@@ -30,7 +30,7 @@ func main() {
 	}
 
 	// Log useful end message
-	log.Println("PRESTOP SLEEP: COMPLETE")
+	log.Println("SLEEP: COMPLETE")
 }
 
 func checkSleepEnvVar() int {
