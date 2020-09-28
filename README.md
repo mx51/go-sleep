@@ -4,5 +4,7 @@
 
 ```
 go get -u github.com/awilmore/go-sleep
-SLEEP_SECONDS=3 go-sleep
+
+# sleep for 3 seconds
+go-sleep -s 3
 ```
