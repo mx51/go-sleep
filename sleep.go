@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
-	"strconv"
 	"time"
 )
 
@@ -12,38 +12,36 @@ const (
 )
 
 var (
-	// Default - no sleep
-	defaultSleepSeconds = 0
+	sleepSeconds int
 )
 
-func main() {
-	// Log useful start message
-	log.Println("SLEEP: STARTING")
+func init() {
+	flag.IntVar(&sleepSeconds, "s", 0, "sleep duration in seconds")
+}
 
-	// Determine sleep time duration
-	sleepSeconds := checkSleepEnvVar()
+func main() {
+	// Process cli args
+	flag.Parse()
+
+	// Lookup HOSTNAME (TODO - use better logging)
+	hostname := lookupHostname()
+
+	// Log useful start message
+	log.Printf("instance=%s - SLEEP STARTING", hostname)
 
 	// Sleep for duration
 	if sleepSeconds > 0 {
-		log.Printf("Sleeping for %d seconds ...", sleepSeconds)
+		log.Printf("instance=%s - sleeping for %d seconds ...", hostname, sleepSeconds)
 		time.Sleep(time.Duration(sleepSeconds) * time.Second)
 	}
 
 	// Log useful end message
-	log.Println("SLEEP: COMPLETE")
+	log.Printf("instance=%s - SLEEP COMPLETE", hostname)
 }
 
-func checkSleepEnvVar() int {
-	sleepSeconds := defaultSleepSeconds
-	// Read env var or default
-	if sleepEnvVarValue := os.Getenv(sleepEnvVarName); sleepEnvVarValue != "" {
-		// Parse env var value
-		i, err := strconv.Atoi(sleepEnvVarValue)
-		if err != nil {
-			log.Printf("error: could not parse env var %s: %v", sleepEnvVarName, err)
-		} else {
-			sleepSeconds = i
-		}
+func lookupHostname() string {
+	if hostname := os.Getenv("HOSTNAME"); hostname != "" {
+		return hostname
 	}
-	return sleepSeconds
+	return "unset"
 }
