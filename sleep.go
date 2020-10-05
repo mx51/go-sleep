@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-const (
-	sleepEnvVarName = "SLEEP_SECONDS"
-)
-
 var (
 	sleepSeconds int
 )
@@ -23,7 +19,6 @@ func main() {
 	// Process cli args
 	flag.Parse()
 
-	// Lookup HOSTNAME (TODO - use better logging)
 	hostname := lookupHostname()
 
 	// Log useful start message
